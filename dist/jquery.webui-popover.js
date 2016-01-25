@@ -91,12 +91,12 @@
         $document.trigger('hiddenAll.' + pluginType);
     };
 
-    var removeAllTargets = function() {
-        // for (var i = 0; i < _srcElements.length; i++) {
-        //     var pop = getPopFromElement(_srcElements[i]);
-        //     console.log(pop.$target);
-        // }
-    };
+    //    var removeAllTargets = function() {
+    //        for (var i = 0; i < _srcElements.length; i++) {
+    //            var pop = getPopFromElement(_srcElements[i]);
+    //            console.log(pop.$target);
+    //        }
+    //    };
 
     var pointerEventToXY = function(e) {
         var out = {
@@ -252,7 +252,7 @@
         },
         /*core method ,show popover */
         show: function() {
-            removeAllTargets();
+            //removeAllTargets();
             var
                 $target = this.getTarget().removeClass().addClass(pluginClass).addClass(this._customTargetClass);
             if (!this.options.multi) {
@@ -566,13 +566,12 @@
             if (typeof content === 'string') {
                 $ct.html(content);
             } else if (content instanceof jQuery) {
-                content.removeClass(pluginClass + '-content');
                 $ct.html('');
                 //Don't want to clone too many times. 
-                if (this.options.cache) {
-                    content.clone(true, true).appendTo($ct);
+                if (!this.options.cache) {
+                    content.clone(true, true).removeClass(pluginClass + '-content').appendTo($ct);
                 } else {
-                    content.appendTo($ct);
+                    content.removeClass(pluginClass + '-content').appendTo($ct);
                 }
             }
             this.$target = $target;
@@ -659,7 +658,7 @@
             var canHide = true;
             for (var i = 0; i < _srcElements.length; i++) {
                 var pop = getPopFromElement(_srcElements[i]);
-                if (pop._opened) {
+                if (pop && pop._opened) {
                     var popX1 = pop.getTarget().offset().left;
                     var popY1 = pop.getTarget().offset().top;
                     var popX2 = pop.getTarget().offset().left + pop.getTarget().width();
