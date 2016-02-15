@@ -60,6 +60,7 @@
                 '</div>',
             backdrop: false,
             dismissible: true,
+            onMouseEnter: null,
             onShow: null,
             onHide: null,
             abortXHR: true,
@@ -641,6 +642,12 @@
                 var self = this;
                 if (self._timeout) {
                     clearTimeout(self._timeout);
+                }
+                if ($.isFunction(self.options.onMouseEnter)) {
+                    var result = self.options.onMouseEnter($target);
+                    if (result === false) {
+                        return;
+                    }
                 }
                 self._enterTimeout = setTimeout(function() {
                     if (!self.getTarget().is(':visible')) {
