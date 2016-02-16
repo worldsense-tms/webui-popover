@@ -638,13 +638,13 @@
             },
 
             /* event handlers */
-            mouseenterHandler: function() {
+            mouseenterHandler: function(evt) {
                 var self = this;
                 if (self._timeout) {
                     clearTimeout(self._timeout);
                 }
                 if ($.isFunction(self.options.onMouseEnter)) {
-                    var result = self.options.onMouseEnter($target);
+                    var result = self.options.onMouseEnter(evt);
                     if (result === false) {
                         return;
                     }
